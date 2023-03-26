@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS HEX
+--dutch-white: #d8cfafff;
+--desert-sand: #e6b89cff;
+--light-coral: #ed9390ff;
+--hot-pink: #f374aeff;
+--brunswick-green: #32533dff; 
+*/
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
@@ -9,4 +17,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  width: 100vw;
 }
