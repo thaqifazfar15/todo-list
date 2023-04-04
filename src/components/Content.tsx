@@ -3,7 +3,7 @@ import TodoList from "./TodoList";
 
 function Content() {
   return (
-    <div className="w-full p-6">
+    <div className="w-full p-4">
       <TodoList
         title="Homework Calculus 1"
         date="22/4/2023"
