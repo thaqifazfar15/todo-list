@@ -10,47 +10,59 @@ interface todoObject {
 }
 
 function TodoPrompt({
+  id,
   show,
   setShow,
   todoArray,
   setTodoArray,
   title,
-  setTitle,
+  newTitle,
+  setNewTitle,
   date,
-  setDate,
+  newDate,
+  setNewDate,
   priority,
-  setPriority,
+  newPriority,
+  setNewPriority,
+  isDone,
 }: {
+  id: string;
   show: boolean;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   todoArray: Array<todoObject>;
   setTodoArray: React.Dispatch<React.SetStateAction<todoObject[]>>;
   title: string;
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  newTitle: string;
+  setNewTitle: React.Dispatch<React.SetStateAction<string>>;
   date: string;
-  setDate: React.Dispatch<React.SetStateAction<string>>;
+  newDate: string;
+  setNewDate: React.Dispatch<React.SetStateAction<string>>;
   priority: string;
-  setPriority: React.Dispatch<React.SetStateAction<string>>;
+  newPriority: string;
+  setNewPriority: React.Dispatch<React.SetStateAction<string>>;
+  isDone: boolean;
 }) {
   return (
-    <div className="fixed left-[50%] top-[50%] -translate-y-1/2 -translate-x-1/2 bg-[#ed9390] rounded-lg shadow-lg h-auto w-[20rem] px-4 pt-8 pb-10 flex items-center flex-col gap-4">
-      <h3 className="text-white text-2xl font-bold mb-6">Add New Todo</h3>
+    <div className="fixed z-1 left-[50%] top-[50%] -translate-y-1/2 -translate-x-1/2 bg-[#ed9390] rounded-lg shadow-lg h-auto w-[20rem] px-4 pt-8 pb-10 flex items-center flex-col gap-4">
+      <h3 className="text-white text-2xl font-bold mb-6">Edit Todo</h3>
       <input
         className="rounded-sm p-1 w-[13rem] h-9"
         onChange={(e) => {
-          setTitle(e.target.value);
+          setNewTitle(e.target.value);
         }}
         type="text"
         name="title"
         id="title"
         placeholder="Title"
+        defaultValue={newTitle}
         required
       />
       <input
         className="rounded-sm p-1 w-[13rem] h-9"
         onChange={(e) => {
-          setDate(e.target.value.toString());
+          setNewDate(e.target.value.toString());
         }}
+        defaultValue={newDate}
         type="date"
         name="date"
         id="date"
@@ -63,10 +75,11 @@ function TodoPrompt({
         <select
           className="p-1"
           onChange={(e) => {
-            setPriority(e.target.value);
+            setNewPriority(e.target.value);
           }}
           name="priority"
           id="priority"
+          defaultValue={newPriority}
         >
           <option value="red">High</option>
           <option value="orange">Medium</option>
@@ -77,23 +90,26 @@ function TodoPrompt({
         className="px-6 py-3 text-lg mt-3 hover:bg-slate-100 active:bg-slate-200 active:shadow-xl rounded-md shadow-lg bg-white"
         type="submit"
         onClick={() => {
-          if (title == "" || date == "" || priority == "") return;
+          if (newTitle == "" || newDate == "" || newPriority == "") return;
           setShow(!show);
           const newTodoObject = {
-            title: title,
-            key: uuidv4(),
-            priority: priority,
-            date: date,
-            isDone: false,
+            title: newTitle,
+            key: id,
+            priority: newPriority,
+            date: newDate,
+            isDone: isDone,
           };
 
-          setTodoArray((todoArray) => [...todoArray, newTodoObject]);
-          setTitle("");
-          setDate("");
-          setPriority("red");
+          setTodoArray((todoArray) => {
+            const newTodoArray = todoArray.map((obj) => {
+              if (obj.key == id) return newTodoObject;
+              return obj;
+            });
+            return newTodoArray;
+          });
         }}
       >
-        Submit
+        Edit
       </button>
     </div>
   );

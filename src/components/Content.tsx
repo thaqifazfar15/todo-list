@@ -1,15 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import TodoList from "./TodoList";
+import { v4 as uuidv4 } from "uuid";
 
-function Content() {
+interface todoObject {
+  title: string;
+  key: string;
+  priority: string;
+  date: string;
+  isDone: boolean;
+}
+
+function Content({
+  todoArray,
+  setTodoArray,
+}: {
+  todoArray: Array<todoObject>;
+  setTodoArray: React.Dispatch<React.SetStateAction<todoObject[]>>;
+}) {
   return (
     <div className="w-full p-4">
-      <TodoList
-        title="Homework Calculus 1"
-        date="22/4/2023"
-        priority="yellow"
-      />
-      <TodoList title="Homework Calculus 1" date="22/4/2023" priority="green" />
+      {todoArray.map((item) => (
+        <TodoList
+          todoArray={todoArray}
+          setTodoArray={setTodoArray}
+          title={item.title}
+          key={item.key}
+          id={item.key}
+          priority={item.priority}
+          date={item.date}
+          isDone={item.isDone}
+        />
+      ))}
     </div>
   );
 }

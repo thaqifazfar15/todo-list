@@ -3,9 +3,35 @@ import Button from "./Button";
 import Collapsible from "./Collapsible";
 import { mdiInbox, mdiStar, mdiCalendar, mdiPencil, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
-import AddTodo from "./AddTodo";
+import ModifyTodo from "./ModifyTodo";
 
-function Sidebar() {
+interface todoObject {
+  title: string;
+  key: string;
+  priority: string;
+  date: string;
+  isDone: boolean;
+}
+
+function Sidebar({
+  todoArray,
+  setTodoArray,
+  title,
+  setTitle,
+  date,
+  setDate,
+  priority,
+  setPriority,
+}: {
+  todoArray: Array<todoObject>;
+  setTodoArray: React.Dispatch<React.SetStateAction<todoObject[]>>;
+  title: string;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  date: string;
+  setDate: React.Dispatch<React.SetStateAction<string>>;
+  priority: string;
+  setPriority: React.Dispatch<React.SetStateAction<string>>;
+}) {
   const [show, setShow] = useState(false);
   const project = [{ name: "Gym" }, { name: "Study" }];
 
@@ -23,8 +49,21 @@ function Sidebar() {
         className="mt-auto ml-auto rounded-md aspect-square p-1 text-white bg-[#ed9390]"
       >
         <Icon className="h-10" path={mdiPlus} />
-      </button>{" "}
-      {show && <AddTodo show={show} setShow={setShow} />}
+      </button>
+      {show && (
+        <ModifyTodo
+          show={show}
+          setShow={setShow}
+          todoArray={todoArray}
+          setTodoArray={setTodoArray}
+          title={title}
+          setTitle={setTitle}
+          date={date}
+          setDate={setDate}
+          priority={priority}
+          setPriority={setPriority}
+        />
+      )}
     </div>
   );
 }
